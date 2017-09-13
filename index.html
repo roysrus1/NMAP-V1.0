@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="options-box">
+        <h1>Find an Exciting Event!</h1>
+        <table>
+          <col style="width:30%">
+          <col style="width:70%">
+          <tr>
+            <td align="left"> <span class="text"> Event type: </span><br> </td>
+            <td align="left"> <input id="search-event-type" type="text" placeholder="Ex: Jazz or Football (default Jazz!)  " > </td>
+          </tr>
+          <tr>
+            <td align="left">  <span class="text"> Date: </span><br> </td>
+            <td align="left"> <input id="search-event-date" type="date"> </td>
+          </tr>
+          <tr>
+            <td align="left"> <span class="text" style="font-size: 13px;"> Pick A Venue: </span> </td>
+            <td align="left">
+                 <select id="pop-locs" size = "5" data-bind="foreach: fgroups">
+                  <optgroup data-bind="attr: {label: name}, foreach: locs"">
+                    <option data-bind="text: name, click: "></option>
+                  </optgroup>
+                </select>
+            </td>
+          </tr>
+        </table>
+        <div><br>
+          &emsp;
+          <input id="search-event" type="button" value="Search" class="button1">
+          <input id="venue-reset" type="button" value="Reset Venues" class="button">
+          <input id="show-favorites" type="button" value="Show Favorites Only" color = "red" class="button"><br>
+        </div><hr>
+        <div id="resp">
+          <h4>Event Data </h4>
+        </div><hr>
+        <h5> Zoom to your favorite city! </h5><br>
+        <div>
+          <input id="zoom-to-area-text" type="text" placeholder="Enter your favorite city!">
+          <input id="zoom-to-area" type="button" value="Zoom" class="button">
+        </div>
+        <div>
+          <h5>Search for nearby places</h5>
+          <input id="places-search" type="text" placeholder="Ex: Pizza delivery in NYC">
+          <input id="go-places" type="button" value="Go" class="button">
+        </div>
+        <div>
+          <h5> Manage Favorites (right click the marker!) </h5>
+          &emsp;&emsp;&emsp;
+          <input id="save-faves" type="button" value="Save" class="button">
+          <input id="get-faves" type="button" value="Recall" class="button">
+          <input id="del-faves" type="button" value="Erase Saved" class="button">
+
+        </div>
+    </div>
+    <div id="map"></div>
+
+
+
+    <script async defer
+        src=
+        "https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyBFO48rdTb1AObBbR-x229_2YdvtdDxVvc&v=3&callback=initMap">
+    </script>
+
+
+<!--     <script src="js/lib/jquery.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>
+    <!-- <script src="js/oms.min.js"></script> -->
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+
+    <script src="js/lib/knockout.js"></script>
+
+    <script src="js/map.js" type="text/javascript"></script>
+
+  </body>
+</html>
