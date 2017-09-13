@@ -17,6 +17,8 @@ This app allows a user to browse for events (sports, music) via a map based GUI.
     in the "Search for Nearby Places" section.
 3.  The app allows users to select 'favorite events' by right-clicking on any of the markers returned from the search.
 4.  The app lets users store and retrieve favorites across sessions.
+5.  Left-clicking a marker brings up an infowindow with additional details of the event.  This information is also retreived
+       from eventful.com
 
 ## App Components:
 1. The app uses Google Maps for map displays.
