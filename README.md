@@ -27,7 +27,7 @@ This app allows a user to browse for events (sports, music) via a map based GUI.
 
 
 ##Directions to install and run:
-1. Fork the repository at https://github.com/roysrus1/NMAP-V1.0/.
+1. Download the repository at https://github.com/roysrus1/NMAP-V1.0/.
 2. Open index.html in your browser (tested on chrome).
 
 
