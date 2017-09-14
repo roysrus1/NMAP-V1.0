@@ -20,11 +20,11 @@ This app allows a user to browse for events (sports, music) via a map based GUI.
 5.  Left-clicking a marker brings up an infowindow with additional details of the event.  This information is also retreived
        from api.eventful.com.
 6.  The list of venues gets filtered when the user types in a location in the zoom box.  For example, typing in 'san' will reduce the list of venues to San Diego & San Francisco.
-7
+7.  If there are multiple overlapping markers, click on the cluster to see the markers spread out. 
 
 ## App Components:
 1. The app uses Google Maps for map displays.
-2. Event information is from a cloud API provided by eventful.com.
+2. Event information is from a cloud API provided by api.eventful.com.
 3. Venues were retrieved from a Firebase repository.
 4. Enhanced marker js library used from OMS (OverlappingMarkerSpiderfier):
     https://github.com/jawj/OverlappingMarkerSpiderfier
