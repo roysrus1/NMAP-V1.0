@@ -1,0 +1,73 @@
+1) Save and Retreive Favs
+2) Create a Schedule
+
+
+
+      class Event {
+        constructor(id, title, description, position, url, fav, label, favLabel, type) {
+          this.id = id;
+          this.title = title;
+          this.desc = description;
+          this.position = position;
+          this.url = url;
+          this.fav = fav;
+          this.label = label;
+          this.favLabel = favLabel;
+          this.type = type;                //can be 'event' or 'place'
+          if (fav) {
+            this.icon = favoriteIcon;
+          } else {
+            this.icon = defaultIcon;
+          }
+          events.add(this);
+        }
+      }
+
+
+color: #D9B310;
+
+
+ var thisEvent = new Event (eventId1, title1, desc1, pos1, false, label1, label1, 'event');
+
+
+        for (var item of events) {
+          if (item.type == type) {
+            var thisMarker = getMarker(item);
+            oms.addMarker(thisMarker);
+            bounds.extend(thisMarker.position);
+          }
+        }
+
+
+
+          center: {lat: 40.7829, lng: -73.9654},
+
+            var fav1 = new Fav (item.id,
+                                item.title,
+                                item.desc,
+                                item.position,
+                                item.label,
+                                item.favLabel);
+
+      function createMarker(title1, eventID1, positionfa, validEvents)
+
+      function createEvent(marker, desc, type)
+
+            this.setIcon(highlightedFavicon);
+            this.icon = favoriteIcon;
+            ToggleFavorite(this);
+
+
+self.customers = ExtractModels(self, data.customers, CustomerModel);
+
+self.filter = new FilterModel(filters, self.customers);			25/191/300
+
+return ko.observableArray(array);
+
+Savings,
+Sell more cloud
+
+
+https://www.sdxcentral.com/articles/news/vmware-ibm-cloud-covers-vodafone-dell-emc-sap/2017/09/?utm_source=SDxCentral.com+Mailing+List&utm_campaign=453290daae-SDxCentral+Newsletter+2017-09-12&utm_medium=email&utm_term=0_c2b6e504a2-453290daae-81829057
+
+

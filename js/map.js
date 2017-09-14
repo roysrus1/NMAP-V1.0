@@ -1,26 +1,30 @@
-      // Initial map related code
+      // This js app displays a google map and allows the user to search for cultural or sports 'events' in an interactive manner.
 
-      var map;
-      var oms;
+      //global variables
+
+      var map;                          // pointer to the google map object
+      var oms;                          // pointer to the OverlappingMarkerSpiderfie object
 
       var markers = [];
-      var events = new Set();
+      var events = new Set();           // this set tracks information additional related to each marker
       var favs = new Set();
       var defaultIcon;
       var highlightedIcon;
       var favoriteIcon;
       var highlightedFavicon;
       var largeInfowindow;
-      var numFav = 0;
-      var searchCircle;
+      var numFav = 0;                   // tracks the total number of favorite markers/events selected by the user.
+      var searchCircle;                 // a circle that is diplayed for every search showing the radius of the search
       var zoomAddress ="";
 
-      var vm;
+      var vm;                           // viewModel object from knockout.
 
       var cities =[];
       var filterCities = [];
 
 
+
+      // information related to each marker is tracked via objects of this class
       class Event {
         constructor(id, title, description, position, url, fav, label, favLabel, type) {
           this.id = id;
@@ -41,7 +45,7 @@
         }
       }
 
-
+      // used to store venue information
       class Poploc {
         constructor(name, city, lat, lng) {
           this.name = name;
@@ -135,6 +139,7 @@
           mapTypeControl: false
         });
 
+        // Constructor used to handle overlapping markers in an elegant manner
         oms = new OverlappingMarkerSpiderfier(map, {
           markersWontMove: true,
           markersWontHide: true,
@@ -175,7 +180,7 @@
         });
 
 
-
+        // firebase code - this retrieves a set of popular event venues that the user can select from
         var config = {
           apiKey: "AIzaSyCxchpGqfVg7Kg1ckQoJc2NEEFF4-nJjg8",
           authDomain: "udacity-events-001.firebaseapp.com",
@@ -201,12 +206,14 @@
              $('#resp').html('<h4> Venues not found, please reload page </h4><br>');
             }
 
+            // a default location is added to the list of venues
             var defaultLoc = new Poploc ('New York City', 'New York City', 40.7829, -73.9654);
             var locs = [];
             locs.push(defaultLoc);
             var defaultCity = new City ('#Default', locs);
             cities.unshift(defaultCity);
 
+            //knockout viewModel to allow for displaying, sorting and filtering an observable list of cities.
             function viewModel () {
               var self = this;
               filterCities = sortCity(cities).slice();
@@ -218,7 +225,7 @@
 
         },500);
 
-
+        // GUI items to manage favorites - these persist across sessions using local storage.
         document.getElementById('save-faves').addEventListener('click', saveFaves);
         document.getElementById('get-faves').addEventListener('click', getFaves);
         document.getElementById('del-faves').addEventListener('click', delFaves);
@@ -228,6 +235,8 @@
         });
       }
 
+
+      // sort venues from a-z.
       function sortCity(records) {
           var result = records.sort(function(l, r){
             return (l.name.toLowerCase() > r.name.toLowerCase() ? 1 : -1);
@@ -237,7 +246,7 @@
 
       }
 
-
+      // filter cities based on user input in the zoom-to-area input box.
       function filterCity(filter, records) {
           if (filter === "") {
             return records;
@@ -254,6 +263,7 @@
       }
 
 
+      // clears venue selection
       function clearVenue() {
         var elements = document.getElementById("pop-locs").options;
         for(var i = 0; i < elements.length; i++){
@@ -261,6 +271,7 @@
         }
       }
 
+      // clears venue filter
       function resetVenue() {
           clearVenue();
 
@@ -279,6 +290,7 @@
 
       }
 
+      // create a google marker
       function createMarker(title, id, position, label) {
         var marker = new google.maps.Marker({
           position: position,
@@ -294,6 +306,8 @@
         return marker;
       }
 
+
+      // add 4 listeners: 2 for left and right click functions, 2 for mouseover and mouseout.
       function addMarkerlisteners (marker) {
 
         // Create an onclick event to open the large infowindow at each marker.
@@ -376,6 +390,7 @@
         }
       }
 
+      //clear all favorites
       function clearFavorites() {
         for (var item of events) {
           if (item.fav) {
@@ -387,6 +402,7 @@
         numFav=0;
       }
 
+      //allows the user to toggle a marker as favorite
       function ToggleFavorite(marker) {
         var thisEvent = getEvent(marker);
 
@@ -404,6 +420,7 @@
         }
       }
 
+      //favorite markers get numbered from 1-9, this funcion returns the first available number in this range
       function getFavlabel() {
         for (var i = 1; i < 10; i++) {
           var favFlag = true;
@@ -420,6 +437,7 @@
         return null;
       }
 
+      //return the event object tracking a given marker
       function getEvent(marker) {
         for (var item of events) {
           if ((item.id == marker.id)) {
@@ -428,6 +446,7 @@
         }
       }
 
+      //return the marker for a given event object
       function getMarker(event) {
         for (var i=0; i<markers.length; i++) {
           if (markers[i].id == event.id) {
@@ -436,6 +455,7 @@
         }
       }
 
+      //ensures there are no duplicate markers and event objects for the same event based on different searches
       function uniqueEvent(id){
         for (var item of events) {
           if ((item.id == id)) {
@@ -445,6 +465,7 @@
         return true;
       }
 
+      //take the output of the eventful.com ajax call and create markers and corresponding event objects.
       function processEvent(response) {
 
         var lat1, long1, title1, desc1, eventId1, url1;
@@ -495,6 +516,7 @@
 
       }
 
+      //ajax call to events.com, by default we look for jazz concerts in NYC
       function searchEvent() {
 
         $('#resp').html('<h4> Loading Event Information </h4><br>');
@@ -529,6 +551,7 @@
             }
           }
 
+          //most venues on the selection list are stadiums/concert halls, except the default, which is NYC.
           if (venue=="New York City") {
             eventLoc1 = '&location='+ popLatLng + '&within=10&units=mi&page_size=20';
           } else {
@@ -542,6 +565,7 @@
           document.getElementById('zoom-to-area-text').value = "";
         }
 
+        //draw a faint circle to show the search region on the map
         if (typeof searchCircle !== "undefined") {
           searchCircle.setMap(null);
         }
@@ -558,7 +582,7 @@
         });
 
 
-
+        //ajax call to eventful.com
         var eventKey = '&app_key=7jB7VTdjGHbLzBvk';
         var eURL = 'http://api.eventful.com/json/events/search?...&keywords=';
         var eventsURL = eURL+eventType+eventLoc1+'&date='+eventDate+eventKey;
@@ -581,7 +605,7 @@
         });
       }
 
-      // Save/Retrieve related code
+      // save/retrieve/delete favorites
 
 
       function delFaves() {
@@ -635,13 +659,10 @@
             infowindow.marker = null;
           });
 
-
+          //retrieve event information for a selected marker via the corresponding event object
           var thisEvent = getEvent(marker);
           var description = thisEvent.desc;
           var title = thisEvent.title;
-          // var label = thisEvent.label;
-          // var favLabel = thisEvent.favLabel;
-          // var fav = thisEvent.fav;
           var url = thisEvent.url;
 
           var innerHTML = '<div>';
@@ -794,14 +815,8 @@
 
           var thisPlace = new Event (id1, place.name, 'none', pos1, place.url, false, null, null, 'place');
 
-          // if (place.geometry.viewport) {
-          //   // Only geocodes have viewport.
-          //   bounds.union(place.geometry.viewport);
-          // } else {
-          //   bounds.extend(place.geometry.location);
-          // }
         }
-        // map.fitBounds(bounds);
+
       }
 
       // This is the PLACE DETAILS search - it's the most detailed so it's only
