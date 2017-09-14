@@ -1,5 +1,4 @@
-
-// Initial map related code
+      // Initial map related code
 
       var map;
       var oms;
@@ -13,7 +12,6 @@
       var highlightedFavicon;
       var largeInfowindow;
       var numFav = 0;
-      var defaultDatabase;
       var searchCircle;
       var zoomAddress ="";
 
@@ -21,7 +19,6 @@
 
       var cities =[];
       var filterCities = [];
-      var viewModel;
 
 
       class Event {
@@ -200,14 +197,14 @@
 
         setTimeout(function() {
 
-            if (cities.length==0) {
-             $('#resp').html('Venues not found, please reload page' + '<br>');
+            if (cities.length===0) {
+             $('#resp').html('<h4> Venues not found, please reload page </h4><br>');
             }
 
-            defaultLoc = new Poploc ('New York City', 'New York City', 40.7829, -73.9654);
+            var defaultLoc = new Poploc ('New York City', 'New York City', 40.7829, -73.9654);
             var locs = [];
             locs.push(defaultLoc);
-            defaultCity = new City ('#Default', locs);
+            var defaultCity = new City ('#Default', locs);
             cities.unshift(defaultCity);
 
             function viewModel () {
@@ -242,7 +239,7 @@
 
 
       function filterCity(filter, records) {
-          if (filter == "") {
+          if (filter === "") {
             return records;
           }
           var fRecords = [];
@@ -267,15 +264,15 @@
       function resetVenue() {
           clearVenue();
 
-          var currLen = vm.fgroups().length;
-          for (i=0; i<currLen; i++) {
+          var currLen1 = vm.fgroups().length;
+          for (var i=0; i<currLen1; i++) {
             vm.fgroups.pop();
           }
 
           filterCities = sortCity(cities).slice();
-          var currLen = filterCities.length;
-          for (i=0; i<currLen; i++) {
-            vm.fgroups.push(filterCities[i]);
+          var currLen2 = filterCities.length;
+          for (var j=0; j<currLen2; j++) {
+            vm.fgroups.push(filterCities[j]);
           }
 
           document.getElementById('zoom-to-area-text').value = "";
@@ -357,7 +354,7 @@
 
       function showMarkers(type) {
 
-        if (events.size==0) {return;}
+        if (events.size===0) {return;}
         var bounds = new google.maps.LatLngBounds();
         // Extend the boundaries of the map for each marker and display the marker
         for (var item of events) {
@@ -374,13 +371,15 @@
       //This function will show events marked as favorites
       function showFavorites() {
         clearMarkers('event');
-        if (numFav) {showMarkers('event')};
+        if (numFav) {
+          showMarkers('event');
+        }
       }
 
       function clearFavorites() {
         for (var item of events) {
           if (item.fav) {
-            thisMarker = getMarker(item);
+            var thisMarker = getMarker(item);
             oms.removeMarker(thisMarker);
             events.delete(item);
           }
@@ -414,7 +413,9 @@
               break;
             }
           }
-          if (favFlag) {return i};
+          if (favFlag) {
+            return i;
+          }
         }
         return null;
       }
@@ -446,6 +447,7 @@
 
       function processEvent(response) {
 
+        var lat1, long1, title1, desc1, eventId1, url1;
         var validEvents = 0;
         var numEvents = response.total_items;
         //var numItems = response.page_size;
@@ -455,16 +457,18 @@
         for (var i = 0; i < numEvents; i++) {
           var errFlag = false;
           try {
-            var lat1 = response.events.event[i].latitude;
-            var long1 = response.events.event[i].longitude;
-            var title1 = response.events.event[i].title;
-            var desc1 = response.events.event[i].description;
-            var eventId1 = response.events.event[i].id;
-            var url1 = response.events.event[i].url;
+            lat1 = response.events.event[i].latitude;
+            long1 = response.events.event[i].longitude;
+            title1 = response.events.event[i].title;
+            desc1 = response.events.event[i].description;
+            eventId1 = response.events.event[i].id;
+            url1 = response.events.event[i].url;
           }
           catch(err) {errFlag = true;}
 
-          if ((desc1 === null) || (desc1 == undefined)) {errFlag = true;}
+          if ((desc1 === null) || (desc1 === undefined)) {
+            errFlag = true;
+          }
 
           if (!uniqueEvent(eventId1)) {errFlag = true;}
 
@@ -479,56 +483,62 @@
 
             validEvents++;
 
-          };
+          }
         }
 
         if (validEvents>0) {
-          $('#resp').html('Events Found: ' + validEvents + '<br>');
+          $('#resp').html('<h4>Events Found: ' + validEvents + '</h4><br>');
           showMarkers('event');
         } else {
-          $('#resp').html('No events found ' + '<br>');
+          $('#resp').html('<h4>No events found ' + '<br>');
         }
 
       }
 
       function searchEvent() {
 
-        $('#resp').html("Loading Event Information");
+        $('#resp').html('<h4> Loading Event Information </h4><br>');
 
         var eventType = document.getElementById('search-event-type').value;
-        if (eventType == '') {eventType = 'jazz'};
+        if (eventType === '') {
+          eventType = 'jazz';
+        }
         var eventDate = document.getElementById('search-event-date').value;
-        if (eventDate == '') {eventDate = 'Future'};
+        if (eventDate === '') {
+          eventDate = 'Future';
+        }
 
         var venue = document.getElementById('pop-locs').value;
         var searchRadius = 16500;
         var searchCenter;
+        var eventLoc1;
+        var popLatLng;
 
-        if (venue=="") {
+        if (venue=== "") {
           searchCenter = map.getCenter();
-          var eventLoc1 = '&location='+ searchCenter.toUrlValue() + '&within=10&units=mi&page_size=20';
-          $('#resp').html("Searching for events " );
+          eventLoc1 = '&location='+ searchCenter.toUrlValue() + '&within=10&units=mi&page_size=20';
+          $('#resp').html('<h4> Searching for events </h4><br>' );
         } else {
-          for (i=0; i< cities.length; i++) {
+          for (var i=0; i< cities.length; i++) {
             var popLoc = cities[i].locs;
-            for (j=0; j< popLoc.length; j++) {
+            for (var j=0; j< popLoc.length; j++) {
               if (popLoc[j].name == venue) {
-                var popLatLng =  popLoc[j].lat + ',' + popLoc[j].lng ;
+                popLatLng =  popLoc[j].lat + ',' + popLoc[j].lng ;
                 break;
               }
             }
           }
 
           if (venue=="New York City") {
-            var eventLoc1 = '&location='+ popLatLng + '&within=10&units=mi&page_size=20';
+            eventLoc1 = '&location='+ popLatLng + '&within=10&units=mi&page_size=20';
           } else {
-            var eventLoc1 = '&location='+ popLatLng + '&within=0.5&units=mi&page_size=20';
+            eventLoc1 = '&location='+ popLatLng + '&within=0.5&units=mi&page_size=20';
             searchRadius = 700;
           }
 
-          var splitLoc = popLatLng.split(",")
+          var splitLoc = popLatLng.split(",");
           searchCenter = new google.maps.LatLng(splitLoc[0], splitLoc[1]);
-          $('#resp').html("Searching near " + venue );
+          $('#resp').html('<h4> Searching near ' + venue + '</h4><br>');
           document.getElementById('zoom-to-area-text').value = "";
         }
 
@@ -554,7 +564,7 @@
         var eventsURL = eURL+eventType+eventLoc1+'&date='+eventDate+eventKey;
 
         var eventRequestTimeout = setTimeout(function(){
-              $('#resp').html("Failed to get event response");
+              $('#resp').html('<h4> Failed to get event response</h4>');
           }, 8000);
 
         $.ajax({
@@ -565,7 +575,7 @@
 
               clearTimeout(eventRequestTimeout);
               var numEvents = response.total_items;
-              $('#resp').html('number of events = ' + numEvents + '<br>');
+              $('#resp').html('<h4>number of events = ' + numEvents + '</h4><br>');
               processEvent(response);
             }
         });
@@ -629,9 +639,9 @@
           var thisEvent = getEvent(marker);
           var description = thisEvent.desc;
           var title = thisEvent.title;
-          var label = thisEvent.label;
-          var favLabel = thisEvent.favLabel;
-          var fav = thisEvent.fav;
+          // var label = thisEvent.label;
+          // var favLabel = thisEvent.favLabel;
+          // var fav = thisEvent.fav;
           var url = thisEvent.url;
 
           var innerHTML = '<div>';
@@ -675,7 +685,7 @@
         // Get the address or place that the user entered.
         zoomAddress = document.getElementById('zoom-to-area-text').value;
         // Make sure the address isn't blank.
-        if (zoomAddress == '') {
+        if (zoomAddress === '') {
           window.alert('You must enter an area, or address.');
         } else {
 
@@ -683,15 +693,15 @@
           clearVenue();
 
 
-          var currLen = vm.fgroups().length;
-          for (i=0; i<currLen; i++) {
+          var currLen1 = vm.fgroups().length;
+          for (var i=0; i<currLen1; i++) {
             vm.fgroups.pop();
           }
 
           filterCities = filterCity(zoomAddress, cities).slice();
-          var currLen = filterCities.length;
-          for (i=0; i<currLen; i++) {
-            vm.fgroups.push(filterCities[i]);
+          var currLen2 = filterCities.length;
+          for (var j=0; j<currLen2; j++) {
+            vm.fgroups.push(filterCities[j]);
           }
 
 
@@ -718,7 +728,7 @@
         searchBox.setBounds(map.getBounds());
         //window.alert('1 ' + map.getBounds());
         var places = searchBox.getPlaces();
-        if (places.length == 0) {
+        if (places.length === 0) {
           window.alert('We did not find any places matching that search!');
         } else {
         // For each place, get the icon, name and location.
@@ -776,7 +786,7 @@
           });
           markers.push(marker);
 
-          var id1 = place.place_id
+          var id1 = place.place_id;
           var lat1 = place.geometry.location.lat();
           var long1 = place.geometry.location.lng();
 
