@@ -9,10 +9,10 @@ This app allows a user to browse for events (sports, music) via a map based GUI.
 
 ## What are the functions of this app:
 1. This app provides a GUI that lets a user find events via 3 methods:<br>
-    a) Select a venue from the list box, type in the type of event and click search.  Example 'Chicago - Soldier Field' & 'Bears'.
-    b) Type in a City in the Zoom section, type in an event, then click search.
+    a) Select a venue from the list box, type in the type of event and click search.  Example 'Chicago - Soldier Field' & 'Bears'.<br>
+    b) Type in a City in the Zoom section, type in an event, then click search.<br>
     c) Simply pan the map to a desired location, type in the event type, then click search.  For this option,
-        no venue should be selected.  If required, this can be acheived via the 'Reset Venue' button.
+        no venue should be selected.  If required, this can be acheived via the 'Reset Venue' button.<br>
 2.  A user can find additional services of interest ('pizza', 'motel') in the map on display by typing in the service desired
     in the "Search for Nearby Places" section.
 3.  The app allows users to select 'favorite events' by right-clicking on any of the markers returned from the search.
