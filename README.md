@@ -38,7 +38,7 @@ This app allows a user to browse for events (sports, music) via a map based GUI.
 
 ##Rubric:
 
-The Rubric can be found at:  <a href="https://review.udacity.com/#!/rubrics/17/view"></a>
+The Rubric can be found at:  "https://review.udacity.com/#!/rubrics/17/view"
 
 ##Notes - what worked in this revision
 Full functional mashup of Google Maps, Eventful, Firebase and OMS to provide a easy user experience in finding events.
